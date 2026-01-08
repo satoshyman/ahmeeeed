@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { UserState, AppSettings } from '../types';
 
@@ -31,6 +32,7 @@ const TasksPage: React.FC<TasksPageProps> = ({ state, settings, onComplete }) =>
     if (type === 'ad') {
       success = await showAd();
     } else {
+      // Simulate social task check
       await new Promise(resolve => setTimeout(resolve, 3000));
       success = true;
     }
@@ -38,17 +40,17 @@ const TasksPage: React.FC<TasksPageProps> = ({ state, settings, onComplete }) =>
     if (success) {
       onComplete(id, reward);
     } else {
-      alert("Task could not be completed.");
+      alert("تعذر إكمال المهمة حالياً.");
     }
     
     setLoadingTask(null);
   };
 
   return (
-    <div className="flex flex-col gap-6 py-4 animate-fadeIn">
+    <div className="flex flex-col gap-6 py-4 animate-fadeIn" dir="rtl">
       <div className="text-center">
-        <h2 className="text-2xl font-bold">Daily Tasks</h2>
-        <p className="text-slate-400 text-sm mt-1">Complete tasks to earn TON</p>
+        <h2 className="text-2xl font-black text-yellow-500">المهام اليومية</h2>
+        <p className="text-slate-400 text-sm mt-1">أكمل المهام لربح المزيد من DOGE</p>
       </div>
 
       <div className="space-y-4">
@@ -57,9 +59,9 @@ const TasksPage: React.FC<TasksPageProps> = ({ state, settings, onComplete }) =>
           const isLoading = loadingTask === task.id;
 
           return (
-            <div key={task.id} className="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex justify-between items-center group hover:border-blue-500/50 transition-colors">
+            <div key={task.id} className="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex justify-between items-center group hover:border-yellow-500/50 transition-colors">
               <div className="flex items-center gap-3">
-                <div className={`p-2 rounded-xl ${isCompleted ? 'bg-green-500/10 text-green-500' : 'bg-blue-500/10 text-blue-500'}`}>
+                <div className={`p-2 rounded-xl ${isCompleted ? 'bg-green-500/10 text-green-500' : 'bg-yellow-500/10 text-yellow-500'}`}>
                   {isCompleted ? (
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                   ) : (
@@ -68,30 +70,30 @@ const TasksPage: React.FC<TasksPageProps> = ({ state, settings, onComplete }) =>
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-100">{task.title}</h4>
-                  <p className="text-xs text-green-400 font-mono">+{task.reward.toFixed(8)} TON</p>
+                  <p className="text-xs text-green-400 font-mono">+{task.reward.toFixed(4)} DOGE</p>
                 </div>
               </div>
 
               <button
                 disabled={isCompleted || !!loadingTask}
                 onClick={() => simulateTask(task.id, task.reward, task.type)}
-                className={`px-6 py-2 rounded-xl text-sm font-bold transition-all duration-200 ${
+                className={`px-6 py-2 rounded-xl text-sm font-black transition-all duration-200 ${
                   isCompleted 
                     ? 'bg-slate-800 text-slate-500 cursor-default' 
                     : isLoading
                       ? 'bg-slate-700 text-slate-400 cursor-wait'
-                      : 'bg-blue-600 hover:bg-blue-500 text-white hover:scale-105 active:scale-95'
+                      : 'bg-yellow-600 hover:bg-yellow-500 text-white hover:scale-105 active:scale-95'
                 }`}
               >
-                {isCompleted ? 'Done' : isLoading ? 'Viewing...' : 'Start'}
+                {isCompleted ? 'مكتمل' : isLoading ? 'جارٍ التحقق...' : 'ابدأ'}
               </button>
             </div>
           );
         })}
       </div>
 
-      <div className="bg-blue-900/20 border border-blue-800/50 p-4 rounded-2xl text-center text-sm text-blue-300">
-        Tasks are refreshed periodically. Make sure to complete them all!
+      <div className="bg-slate-900/40 border border-slate-800 p-4 rounded-2xl text-center text-[10px] text-slate-500 font-bold">
+        يتم تحديث المهام بشكل دوري. تأكد من إكمالها جميعاً لزيادة رصيدك!
       </div>
     </div>
   );
