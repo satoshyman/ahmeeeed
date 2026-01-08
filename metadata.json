@@ -1,0 +1,9 @@
+
+{
+  "name": "Dogecoin Cloud Miner Pro",
+  "description": "نظام احترافي لمحاكاة تعدين الدوجكوين عبر تليجرام مع نظام إحالات وسحب متطور.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
